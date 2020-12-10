@@ -30,4 +30,14 @@ public class RESTControl {
         }
         return "";
     }
+
+    public static boolean delete(String endpoint, int id) throws IOException {
+        URL url = new URL(apiAddress + endpoint + "?id=" + id);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("DELETE");
+        connection.setRequestProperty("Content-type", "application/json; charset=UTF-8");
+        int resCode = connection.getResponseCode();
+        System.out.println("Response code received: " + resCode);
+        return resCode == HttpURLConnection.HTTP_OK;
+    }
 }

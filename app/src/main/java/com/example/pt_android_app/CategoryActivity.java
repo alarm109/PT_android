@@ -36,14 +36,22 @@ public class CategoryActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        new GetCategories().execute();
+        populateCategories();
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
-        new GetCategories().execute();
+        populateCategories();
         return true;
+    }
+
+    public void populateCategories() {
+        new GetCategories().execute();
+    }
+
+    public void delCategory(String id) {
+        new DeleteCategory().execute(id);
     }
 
     private final class GetCategories extends AsyncTask<String, String, String> {
@@ -100,6 +108,34 @@ public class CategoryActivity extends AppCompatActivity {
                     data.show();
                 }
             }
+        }
+    }
+
+    private final class DeleteCategory extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String output = "";
+            int id = Integer.parseInt(strings[0]);
+            System.out.println("**************SENT: " + id);
+
+            try {
+                RESTControl.delete("category", id);
+                return "success deleting";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "error";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
         }
     }
 }

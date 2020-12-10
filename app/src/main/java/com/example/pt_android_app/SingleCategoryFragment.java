@@ -2,7 +2,10 @@ package com.example.pt_android_app;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +57,7 @@ public class SingleCategoryFragment extends Fragment {
         return fragment;
     }
 
-    public static Bundle getBundle (int param1, String param2, String param3) {
+    public static Bundle getBundle(int param1, String param2, String param3) {
         Bundle args = new Bundle();
         args.putInt(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -83,5 +86,31 @@ public class SingleCategoryFragment extends Fragment {
         description.setText(mParam3);
 
         return inflatedView;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        view.findViewById(R.id.cat_delete).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CategoryActivity categoryActivity = (CategoryActivity) getActivity();
+                if (categoryActivity != null) {
+                    categoryActivity.delCategory("" + mParam1);
+                    NavHostFragment.findNavController(SingleCategoryFragment.this)
+                            .popBackStack();
+                    categoryActivity.populateCategories();
+                }
+            }
+        });
+
+//        view.findViewById(R.id.cat_edit).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                NavHostFragment.findNavController(FirstFragment.this)
+//                        .navigate(R.id.action_FirstFragment_to_categoryActivity);
+//            }
+//        });
     }
 }
