@@ -54,6 +54,10 @@ public class CategoryActivity extends AppCompatActivity {
         new DeleteCategory().execute(id);
     }
 
+    public void createCategory(String name, String description) {
+        new CreateCategory().execute(name, description);
+    }
+
     private final class GetCategories extends AsyncTask<String, String, String> {
 
         @Override
@@ -126,6 +130,34 @@ public class CategoryActivity extends AppCompatActivity {
 
             try {
                 RESTControl.delete("category", id);
+                return "success deleting";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "error";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+        }
+    }
+
+    private final class CreateCategory extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String output = "";
+            String name = strings[0];
+            String description = strings[1];
+
+            try {
+                RESTControl.createCategory("category", name, description);
                 return "success deleting";
             } catch (Exception e) {
                 e.printStackTrace();

@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_categoryListFragment_to_singleCategoryFragment2"
             app:destination="@id/singleCategoryFragment2" />
+        <action
+            android:id="@+id/action_categoryListFragment_to_createOrEditCategoryFragment"
+            app:destination="@id/createOrEditCategoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/singleCategoryFragment2"
@@ -23,4 +26,9 @@
             android:id="@+id/action_singleCategoryFragment2_to_categoryListFragment"
             app:destination="@id/categoryListFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/createOrEditCategoryFragment"
+        android:name="com.example.pt_android_app.CreateOrEditCategoryFragment"
+        android:label="fragment_create_or_edit_category"
+        tools:layout="@layout/fragment_create_or_edit_category" />
 </navigation>

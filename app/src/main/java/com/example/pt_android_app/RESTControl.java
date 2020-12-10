@@ -1,8 +1,17 @@
 package com.example.pt_android_app;
 
+import com.example.pt_android_app.objects.Category;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -38,6 +47,46 @@ public class RESTControl {
         connection.setRequestProperty("Content-type", "application/json; charset=UTF-8");
         int resCode = connection.getResponseCode();
         System.out.println("Response code received: " + resCode);
+        return resCode == HttpURLConnection.HTTP_OK;
+    }
+
+    public static boolean createCategory(String endpoint, String name, String description) throws IOException, JSONException {
+        URL url = new URL(apiAddress + endpoint);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setDoOutput(true);
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-type", "application/json; charset=UTF-8");
+
+//        OutputStream os = connection.getOutputStream();
+//        OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
+        JSONObject cat = new JSONObject();
+        cat.put("name", name);
+        cat.put("description", description);
+        cat.put("fms_id", 1);
+
+        OutputStreamWriter wr= new OutputStreamWriter(connection.getOutputStream());
+        wr.write(cat.toString());
+
+        wr.flush();
+        wr.close();
+//        os.close();
+        connection.connect();
+
+        int resCode = connection.getResponseCode();
+        System.out.println("Response code received: " + resCode);
+        if (resCode == HttpURLConnection.HTTP_OK) {
+            String result;
+            BufferedInputStream bis = new BufferedInputStream(connection.getInputStream());
+            ByteArrayOutputStream buf = new ByteArrayOutputStream();
+            int result2 = bis.read();
+            while (result2 != -1) {
+                buf.write((byte) result2);
+                result2 = bis.read();
+            }
+            result = buf.toString();
+            System.out.println(result);
+        }
+
         return resCode == HttpURLConnection.HTTP_OK;
     }
 }
