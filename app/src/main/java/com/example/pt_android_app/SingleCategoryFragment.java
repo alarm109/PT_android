@@ -105,12 +105,20 @@ public class SingleCategoryFragment extends Fragment {
             }
         });
 
-//        view.findViewById(R.id.cat_edit).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                NavHostFragment.findNavController(FirstFragment.this)
-//                        .navigate(R.id.action_FirstFragment_to_categoryActivity);
-//            }
-//        });
+        view.findViewById(R.id.cat_edit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", mParam1);
+                bundle.putString("name", mParam2);
+                bundle.putString("desc", mParam3);
+
+                NavHostFragment.findNavController(SingleCategoryFragment.this)
+                        .navigate(
+                                R.id.action_singleCategoryFragment2_to_createOrEditCategoryFragment,
+                                bundle
+                        );
+            }
+        });
     }
 }

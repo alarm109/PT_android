@@ -57,8 +57,6 @@ public class RESTControl {
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-type", "application/json; charset=UTF-8");
 
-//        OutputStream os = connection.getOutputStream();
-//        OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
         JSONObject cat = new JSONObject();
         cat.put("name", name);
         cat.put("description", description);
@@ -69,7 +67,43 @@ public class RESTControl {
 
         wr.flush();
         wr.close();
-//        os.close();
+        connection.connect();
+
+        int resCode = connection.getResponseCode();
+        System.out.println("Response code received: " + resCode);
+        if (resCode == HttpURLConnection.HTTP_OK) {
+            String result;
+            BufferedInputStream bis = new BufferedInputStream(connection.getInputStream());
+            ByteArrayOutputStream buf = new ByteArrayOutputStream();
+            int result2 = bis.read();
+            while (result2 != -1) {
+                buf.write((byte) result2);
+                result2 = bis.read();
+            }
+            result = buf.toString();
+            System.out.println(result);
+        }
+
+        return resCode == HttpURLConnection.HTTP_OK;
+    }
+
+    public static boolean updateCategory(String endpoint, String id, String name, String description) throws IOException, JSONException {
+        URL url = new URL(apiAddress + endpoint + "?id=" + id);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setDoOutput(true);
+        connection.setRequestMethod("PUT");
+        connection.setRequestProperty("Content-type", "application/json; charset=UTF-8");
+
+        JSONObject cat = new JSONObject();
+        cat.put("name", name);
+        cat.put("description", description);
+        cat.put("fms_id", 1);
+
+        OutputStreamWriter wr= new OutputStreamWriter(connection.getOutputStream());
+        wr.write(cat.toString());
+
+        wr.flush();
+        wr.close();
         connection.connect();
 
         int resCode = connection.getResponseCode();

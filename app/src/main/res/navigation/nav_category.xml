@@ -23,12 +23,16 @@
         android:label="fragment_single_category"
         tools:layout="@layout/fragment_single_category" >
         <action
-            android:id="@+id/action_singleCategoryFragment2_to_categoryListFragment"
-            app:destination="@id/categoryListFragment" />
+            android:id="@+id/action_singleCategoryFragment2_to_createOrEditCategoryFragment"
+            app:destination="@id/createOrEditCategoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/createOrEditCategoryFragment"
         android:name="com.example.pt_android_app.CreateOrEditCategoryFragment"
         android:label="fragment_create_or_edit_category"
-        tools:layout="@layout/fragment_create_or_edit_category" />
+        tools:layout="@layout/fragment_create_or_edit_category" >
+        <action
+            android:id="@+id/action_createOrEditCategoryFragment_to_categoryListFragment"
+            app:destination="@id/categoryListFragment" />
+    </fragment>
 </navigation>

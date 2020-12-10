@@ -58,6 +58,10 @@ public class CategoryActivity extends AppCompatActivity {
         new CreateCategory().execute(name, description);
     }
 
+    public void updateCategory(String id, String name, String description) {
+        new UpdateCategory().execute(id, name, description);
+    }
+
     private final class GetCategories extends AsyncTask<String, String, String> {
 
         @Override
@@ -68,8 +72,6 @@ public class CategoryActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
             String output = "";
-//            String params = strings[0];
-//            System.out.println("**************SENT: " + params);
 
             try {
                 return RESTControl.get("category");
@@ -168,6 +170,36 @@ public class CategoryActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+        }
+    }
+
+    private final class UpdateCategory extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String output = "";
+            String id = strings[0];
+            String name = strings[1];
+            String description = strings[2];
+
+            try {
+                RESTControl.updateCategory("category", id, name, description);
+                return "success deleting";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "error";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            populateCategories();
         }
     }
 }
