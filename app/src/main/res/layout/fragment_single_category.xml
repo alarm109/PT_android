@@ -4,33 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstFragment">
+    tools:context=".SingleCategoryFragment">
+
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="16dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/button_first"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Kategorijos" />
-
-        <Button
-            android:id="@+id/button_first2"
+        <TextView
+            android:id="@+id/cat_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/next" />
+            android:text="name" />
+
+        <TextView
+            android:id="@+id/cat_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="description" />
+
+        <Button
+            android:id="@+id/cat_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Redaguoti" />
+
+        <Button
+            android:id="@+id/cat_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Istrinti" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
